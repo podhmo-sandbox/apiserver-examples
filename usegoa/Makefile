@@ -37,9 +37,9 @@ clean:
 generate:
 	@goagen app     -d github.com/goadesign/goa-cellar/design
 	@goagen client  -d github.com/goadesign/goa-cellar/design
-	# @goagen schema  -d github.com/goadesign/goa-cellar/design -o public
-	# @goagen swagger -d github.com/goadesign/goa-cellar/design -o public
-	# @goagen js      -d github.com/goadesign/goa-cellar/design -o public
+	@goagen schema  -d github.com/goadesign/goa-cellar/design -o public
+	@goagen swagger -d github.com/goadesign/goa-cellar/design -o public
+	@goagen js      -d github.com/goadesign/goa-cellar/design -o public
 
 build:
 	@go build -o cellar
