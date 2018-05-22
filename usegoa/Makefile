@@ -45,4 +45,6 @@ generate:
 	@goagen js      -d github.com/podhmo/apiserver-examples/usegoa/design -o public
 
 build:
-	@go build -o cellar
+	rm -rf bin
+	mkdir -p bin
+	for i in `find cmd -mindepth 1 -maxdepth 2 -type d | grep -v bin`; do (cd $$i; go build -o ../../bin/`basename $$i`); done
