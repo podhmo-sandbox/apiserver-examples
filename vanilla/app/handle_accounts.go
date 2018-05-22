@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/podhmo/apiserver-examples/vanilla/app/mapper"
+	"github.com/podhmo/apiserver-examples/vanilla/app/renderer"
 )
 
 // handleAccountList retrieves all the accounts.
@@ -14,11 +15,6 @@ func (s *Server) handleAccountList() http.HandlerFunc {
 		for i, account := range accounts {
 			res[i] = mapper.ToAccountTiny(&account)
 		}
-
-		w.Header().Set("Content-Type", "/application/json")
-		if err := NewJSONEncoder(w).Encode(res); err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
+		renderer.JSON(w, res)
 	}
 }
