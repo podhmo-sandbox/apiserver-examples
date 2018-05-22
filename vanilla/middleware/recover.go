@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/podhmo/apiserver-examples/vanilla/app/renderer"
+	"github.com/podhmo/apiserver-examples/vanilla/renderer"
 )
 
 // Recover is a middleware that recovers panics and maps them to errors.

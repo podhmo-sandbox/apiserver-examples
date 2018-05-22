@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/podhmo/apiserver-examples/vanilla/app/renderer"
+	"github.com/podhmo/apiserver-examples/vanilla/renderer"
 	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 

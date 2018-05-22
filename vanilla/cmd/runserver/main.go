@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/podhmo/apiserver-examples/vanilla/app"
-	"github.com/podhmo/apiserver-examples/vanilla/app/middleware"
+	"github.com/podhmo/apiserver-examples/vanilla/middleware"
 	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
