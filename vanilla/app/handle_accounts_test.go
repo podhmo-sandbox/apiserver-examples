@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/podhmo/apiserver-examples/noframework/app/mapper"
-	"github.com/podhmo/apiserver-examples/noframework/store"
+	"github.com/podhmo/apiserver-examples/vanilla/app/mapper"
+	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
 func TestListAccount(t *testing.T) {

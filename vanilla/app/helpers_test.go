@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/podhmo/apiserver-examples/noframework/store"
+	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
 const (

@@ -3,7 +3,7 @@ package app
 import (
 	"net/http"
 
-	"github.com/podhmo/apiserver-examples/noframework/store"
+	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
 // Server :

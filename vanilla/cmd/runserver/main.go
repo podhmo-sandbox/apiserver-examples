@@ -5,8 +5,8 @@ import (
 
 	"net/http"
 
-	"github.com/podhmo/apiserver-examples/noframework/app"
-	"github.com/podhmo/apiserver-examples/noframework/store"
+	"github.com/podhmo/apiserver-examples/vanilla/app"
+	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
 func main() {

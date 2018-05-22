@@ -3,7 +3,7 @@ package app
 import (
 	"net/http"
 
-	"github.com/podhmo/apiserver-examples/noframework/app/mapper"
+	"github.com/podhmo/apiserver-examples/vanilla/app/mapper"
 )
 
 // handleAccountList retrieves all the accounts.

@@ -3,7 +3,7 @@ package mapper
 import (
 	"time"
 
-	"github.com/podhmo/apiserver-examples/noframework/store"
+	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
 // ToAccount builds an account media type from an account model.
