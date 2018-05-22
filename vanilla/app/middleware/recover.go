@@ -6,11 +6,13 @@ import (
 	"net/http"
 	"runtime"
 	"strings"
+
+	"github.com/podhmo/apiserver-examples/vanilla/app/renderer"
 )
 
 // Recover is a middleware that recovers panics and maps them to errors.
-func Recover(h http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
+func Recover(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		defer func() {
 			if r := recover(); r != nil {
 				var msg string
@@ -28,9 +30,9 @@ func Recover(h http.HandlerFunc) http.HandlerFunc {
 				lines := strings.Split(string(buf), "\n")
 				log.Printf("%s\n%s", msg, strings.Join(lines, "\n"))
 
-				w.WriteHeader(500)
+				renderer.Error(w, msg, http.StatusInternalServerError)
 			}
 		}()
-		h(w, req)
-	}
+		h.ServeHTTP(w, req)
+	})
 }

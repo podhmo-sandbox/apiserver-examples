@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/podhmo/apiserver-examples/vanilla/app"
+	"github.com/podhmo/apiserver-examples/vanilla/app/middleware"
 	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
@@ -16,7 +17,11 @@ func main() {
 }
 
 func run() error {
-	db := store.NewDB()
-	server := app.NewServer(db)
+	var (
+		db     = store.NewDB()
+		server http.Handler
+	)
+	server = app.NewServer(db)
+	server = middleware.Recover(server)
 	return http.ListenAndServe(":8081", server)
 }
