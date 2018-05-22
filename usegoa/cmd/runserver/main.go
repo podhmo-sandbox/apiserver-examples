@@ -7,9 +7,9 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
-	"github.com/goadesign/goa-cellar/controllers"
-	"github.com/goadesign/goa-cellar/store"
+	"github.com/podhmo/apiserver-examples/usegoa/app"
+	"github.com/podhmo/apiserver-examples/usegoa/controllers"
+	"github.com/podhmo/apiserver-examples/usegoa/store"
 	"github.com/goadesign/goa/logging/kit"
 	"github.com/goadesign/goa/middleware"
 )

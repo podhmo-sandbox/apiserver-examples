@@ -4,7 +4,7 @@
 //
 // Command:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
+// --design=github.com/podhmo/apiserver-examples/usegoa/design
 // --out=$(GOPATH)/src/github.com/podhmo/apiserver-examples/usegoa
 // --version=v1.3.1
 
