@@ -25,6 +25,9 @@ all: depend clean generate build
 depend:
 	@go get $(DEPEND)
 
+test:
+	@go test -v ./...
+
 clean:
 	@rm -rf app
 	@rm -rf client
