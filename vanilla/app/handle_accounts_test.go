@@ -7,7 +7,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/podhmo/apiserver-examples/vanilla/app/mapper"
 	"github.com/podhmo/apiserver-examples/vanilla/store"
 )
 
@@ -42,7 +41,7 @@ func TestListAccount(t *testing.T) {
 			t.Fatalf("expected status is %d but %d", http.StatusOK, resp.StatusCode)
 		}
 
-		var accounts []mapper.AccountTiny
+		var accounts []AccountTiny
 		decoder := json.NewDecoder(w.Result().Body)
 		if err := decoder.Decode(&accounts); err != nil {
 			t.Fatal("unexpected", err)
