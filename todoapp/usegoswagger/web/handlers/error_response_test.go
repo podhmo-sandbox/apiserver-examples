@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/testutil"
+	webtest "github.com/podhmo/go-webtest"
 )
 
 type fakeT struct {
@@ -27,7 +28,7 @@ func TestErrorResponse(t *testing.T) {
 
 	t.Run("404", func(t *testing.T) {
 		ft := &fakeT{T: t}
-		testutil.TryRequest(
+		webtest.TryJSONRequest(
 			ft,
 			server.GetHandler(),
 			"GET",

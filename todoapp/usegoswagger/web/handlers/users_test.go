@@ -8,6 +8,7 @@ import (
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/mylib/mytime"
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/components"
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/testutil"
+	webtest "github.com/podhmo/go-webtest"
 )
 
 func TestCreateUser(t *testing.T) {
@@ -17,13 +18,13 @@ func TestCreateUser(t *testing.T) {
 	)
 	defer teardown()
 
-	testutil.TryRequest(
+	webtest.TryJSONRequest(
 		t,
 		server.GetHandler(),
 		"POST",
 		"/users",
 		http.StatusCreated,
-		testutil.WithRequestJSONBody(`{"name": "foo"}`),
-		testutil.WithRequestAssertJSONResponse(`{"name": "foo", "nilckname": "F"}`),
+		webtest.WithJSONBody(`{"name": "foo"}`),
+		webtest.WithAssertJSONResponse(`{"name": "foo", "nilckname": "F"}`),
 	)
 }
