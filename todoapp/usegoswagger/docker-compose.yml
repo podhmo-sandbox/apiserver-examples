@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: postgres:11.1-alpine
+    restart: always
+    environment:
+      IMPORT_FROM_DIR: /data
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: todoapp
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.data/db/sh:/docker-entrypoint-init.data.d
+      - ./.data/db/data:/data
+      - ./.data/db/storage:/var/lib/postgresql/data
+
