@@ -12,36 +12,39 @@ import (
 	"github.com/pkg/errors"
 )
 
-// RequestOption :
-type RequestOption struct {
+// TryRequestRequest :
+type TryRequestRequest struct {
 	Method     string
 	Path       string
 	Body       io.Reader
 	Assertions []func(t testing.TB, res *TryRequestResponse)
 	Response   TryRequestResponse
+
+	bodyString string
 }
 
 // TryRequestResponse :
 type TryRequestResponse struct {
-	Body bytes.Buffer
+	Request *TryRequestRequest
+	Body    bytes.Buffer
 	*http.Response
 }
 
 // TryRequest :
-func TryRequest(t testing.TB, mux http.Handler, method, path string, status int, options ...func(*RequestOption) error) *TryRequestResponse {
+func TryRequest(t testing.TB, mux http.Handler, method, path string, status int, options ...func(*TryRequestRequest) error) *TryRequestResponse {
 	t.Helper()
-	rop := &RequestOption{
+	treq := &TryRequestRequest{
 		Method: method,
 		Path:   path,
 	}
 
 	for _, op := range options {
-		if err := op(rop); err != nil {
+		if err := op(treq); err != nil {
 			t.Fatalf("apply option %+v", err)
 			return nil
 		}
 	}
-	req := httptest.NewRequest(rop.Method, rop.Path, rop.Body)
+	req := httptest.NewRequest(treq.Method, treq.Path, treq.Body)
 
 	// todo: to option
 	req.Header.Set("Content-Type", "application/json")
@@ -50,6 +53,7 @@ func TryRequest(t testing.TB, mux http.Handler, method, path string, status int,
 
 	res := rec.Result()
 	tresponse := TryRequestResponse{
+		Request:  treq,
 		Response: res,
 	}
 
@@ -66,31 +70,32 @@ func TryRequest(t testing.TB, mux http.Handler, method, path string, status int,
 		return nil
 	}
 
-	for _, assert := range rop.Assertions {
+	for _, assert := range treq.Assertions {
 		assert(t, &tresponse)
 	}
 	return &tresponse
 }
 
 // WithRequestJSONBody :
-func WithRequestJSONBody(body string) func(rop *RequestOption) error {
-	return func(rop *RequestOption) error {
-		rop.Body = bytes.NewBufferString(body)
+func WithRequestJSONBody(body string) func(treq *TryRequestRequest) error {
+	return func(treq *TryRequestRequest) error {
+		treq.bodyString = body
+		treq.Body = bytes.NewBufferString(body)
 		return nil
 	}
 }
 
 // WithRequestAssert :
-func WithRequestAssert(assert func(t testing.TB, res *TryRequestResponse)) func(rop *RequestOption) error {
-	return func(rop *RequestOption) error {
-		rop.Assertions = append(rop.Assertions, assert)
+func WithRequestAssert(assert func(t testing.TB, res *TryRequestResponse)) func(treq *TryRequestRequest) error {
+	return func(treq *TryRequestRequest) error {
+		treq.Assertions = append(treq.Assertions, assert)
 		return nil
 	}
 }
 
 // WithRequestAssertJSONResponse :
-func WithRequestAssertJSONResponse(body string) func(rop *RequestOption) error {
-	return func(rop *RequestOption) error {
+func WithRequestAssertJSONResponse(body string) func(treq *TryRequestRequest) error {
+	return func(treq *TryRequestRequest) error {
 		var expected string
 		{
 			var ob interface{}
@@ -104,7 +109,7 @@ func WithRequestAssertJSONResponse(body string) func(rop *RequestOption) error {
 			expected = string(b)
 		}
 
-		rop.Assertions = append(rop.Assertions, func(t testing.TB, res *TryRequestResponse) {
+		treq.Assertions = append(treq.Assertions, func(t testing.TB, res *TryRequestResponse) {
 			var actual string
 			var ob interface{}
 
@@ -124,7 +129,29 @@ func WithRequestAssertJSONResponse(body string) func(rop *RequestOption) error {
 			}
 
 			if expected != actual {
-				t.Fatalf("mismatch response:\n***diff (- missing, + excess)***\n%s\n\n***expected***\n%s\n\n***actual***\n%s", StringDiff(expected, actual), expected, actual)
+				t.Fatalf(`mismatch response:
+## diff (- missing, + excess)
+
+%s
+
+## request
+
+%s %s
+
+%s
+
+## expected response
+
+%s
+
+## actual response
+%s`,
+					StringDiff(expected, actual),
+					res.Request.Method,
+					res.Request.Path,
+					res.Request.bodyString,
+					expected,
+					actual)
 			}
 		})
 		return nil
