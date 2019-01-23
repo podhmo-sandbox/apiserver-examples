@@ -10,8 +10,7 @@ import (
 	runtime "github.com/go-openapi/runtime"
 
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations"
-	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations/user"
-	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/handlers"
+	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/configuration"
 )
 
 //go:generate swagger generate server --target ../../../usegoswagger --name Usegoswagger --spec ../../swagger.yml --model-package gen/models --server-package gen/restapi --exclude-main
@@ -19,6 +18,8 @@ import (
 func configureFlags(api *operations.UsegoswaggerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
+
+// Setup
 
 func configureAPI(api *operations.UsegoswaggerAPI) http.Handler {
 	// configure the api here
@@ -34,7 +35,10 @@ func configureAPI(api *operations.UsegoswaggerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.UserCreateUserHandler = user.CreateUserHandlerFunc(handlers.CreateUser)
+	// **************************************** //
+	// almost all setting
+	configuration.GetConfigurator().Configure(api)
+	// **************************************** //
 
 	api.ServerShutdown = func() {}
 

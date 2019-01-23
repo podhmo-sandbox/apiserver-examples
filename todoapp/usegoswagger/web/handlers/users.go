@@ -8,6 +8,10 @@ import (
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/viewmodel"
 )
 
+// UserController :
+type UserController struct {
+}
+
 // CreateUser :
 func CreateUser(params operations.CreateUserParams) middleware.Responder {
 	// todo: validation
