@@ -3,9 +3,32 @@ consumes:
 info:
   title: Usegoswagger
   version: 0.1.0
-paths: {}
 produces:
 - application/json
 schemes:
 - http
 swagger: "2.0"
+
+definitions:
+  datetime:
+    type: string
+    example: 2018-01-01T00:00:Z
+  user:
+    type: object
+    properties:
+      name:
+        type: string
+      createdAt:
+        $ref: "#/definitions/datetime"
+
+paths:
+  /users:
+    post:
+      operationId: createUser
+      tags:
+        - user
+      responses:
+        201:
+          description: created
+          schema:
+            $ref: "#/definitions/user"
