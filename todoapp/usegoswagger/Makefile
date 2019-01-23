@@ -4,10 +4,10 @@ test:
 # database
 docker:
 	docker-compose up
-psql:
+db-client:
 	psql -a --dbname todoapp --host localhost --port 5432 -U docker -W
-# iniqsql:
-# 	psql -a --dbname db --host localhost --port 5432 -U docker -W -f migrations/00init.sql
+db-init:
+	psql -a --dbname todoapp --host localhost --port 5432 -U docker -W -f migrations/00*.sql -f migrations/01*.sql
 
 # swagger
 validate:
