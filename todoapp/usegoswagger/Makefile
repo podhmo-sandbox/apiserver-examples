@@ -1,3 +1,6 @@
+test:
+	go test -cover ./...
+
 validate:
 	swagger validate swagger.yml
 

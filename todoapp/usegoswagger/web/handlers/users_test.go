@@ -25,6 +25,6 @@ func TestCreateUser(t *testing.T) {
 		"/users",
 		http.StatusCreated,
 		webtest.WithJSONBody(`{"name": "foo"}`),
-		webtest.WithAssertJSONResponse(`{"name": "foo", "nilckname": "F"}`),
+		webtest.WithAssertJSONResponse(`{"id": "1", "name": "foo", "createdAt": "2000-01-01T00:00:00Z"}`),
 	)
 }
