@@ -3,8 +3,11 @@ package handlers_test
 import (
 	"bytes"
 	"encoding/json"
+	"io"
+	"os"
 	"testing"
 
+	"net/http"
 	"net/http/httptest"
 
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/testutil"
@@ -31,7 +34,11 @@ func TestCreateUser(t *testing.T) {
 	mux.ServeHTTP(rec, req)
 	res := rec.Result()
 
-	if expected, got := 200, res.StatusCode; got != expected {
+	if expected, got := http.StatusCreated, res.StatusCode; got != expected {
 		t.Fatalf("status code: expected %d, but %d", expected, got)
+	}
+
+	if _, err := io.Copy(os.Stdout, res.Body); err != nil {
+		t.Fatal(err)
 	}
 }
