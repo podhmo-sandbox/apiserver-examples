@@ -8,10 +8,10 @@ import (
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
 
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations"
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations/user"
+	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/handlers"
 )
 
 //go:generate swagger generate server --target ../../../usegoswagger --name Usegoswagger --spec ../../swagger.yml --model-package gen/models --server-package gen/restapi --exclude-main
@@ -34,9 +34,7 @@ func configureAPI(api *operations.UsegoswaggerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.UserCreateUserHandler = user.CreateUserHandlerFunc(func(params user.CreateUserParams) middleware.Responder {
-		return middleware.NotImplemented("operation user.CreateUser has not yet been implemented")
-	})
+	api.UserCreateUserHandler = user.CreateUserHandlerFunc(handlers.CreateUser)
 
 	api.ServerShutdown = func() {}
 

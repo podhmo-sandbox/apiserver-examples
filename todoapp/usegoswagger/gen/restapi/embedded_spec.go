@@ -39,6 +39,15 @@ func init() {
           "user"
         ],
         "operationId": "createUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "created",
@@ -57,9 +66,15 @@ func init() {
     },
     "user": {
       "type": "object",
+      "required": [
+        "name"
+      ],
       "properties": {
         "createdAt": {
           "$ref": "#/definitions/datetime"
+        },
+        "id": {
+          "type": "string"
         },
         "name": {
           "type": "string"
@@ -90,6 +105,15 @@ func init() {
           "user"
         ],
         "operationId": "createUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "created",
@@ -108,9 +132,15 @@ func init() {
     },
     "user": {
       "type": "object",
+      "required": [
+        "name"
+      ],
       "properties": {
         "createdAt": {
           "$ref": "#/definitions/datetime"
+        },
+        "id": {
+          "type": "string"
         },
         "name": {
           "type": "string"

@@ -10,6 +10,7 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // User user
@@ -19,8 +20,12 @@ type User struct {
 	// created at
 	CreatedAt Datetime `json:"createdAt,omitempty"`
 
+	// id
+	ID string `json:"id,omitempty"`
+
 	// name
-	Name string `json:"name,omitempty"`
+	// Required: true
+	Name *string `json:"name"`
 }
 
 // Validate validates this user
@@ -28,6 +33,10 @@ func (m *User) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -47,6 +56,15 @@ func (m *User) validateCreatedAt(formats strfmt.Registry) error {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("createdAt")
 		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *User) validateName(formats strfmt.Registry) error {
+
+	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
 	}
 

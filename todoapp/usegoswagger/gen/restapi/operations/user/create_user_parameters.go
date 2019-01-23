@@ -9,7 +9,10 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+
+	models "github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/models"
 )
 
 // NewCreateUserParams creates a new CreateUserParams object
@@ -27,6 +30,11 @@ type CreateUserParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
+
+	/*
+	  In: body
+	*/
+	Body *models.User
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -38,6 +46,22 @@ func (o *CreateUserParams) BindRequest(r *http.Request, route *middleware.Matche
 
 	o.HTTPRequest = r
 
+	if runtime.HasBody(r) {
+		defer r.Body.Close()
+		var body models.User
+		if err := route.Consumer.Consume(r.Body, &body); err != nil {
+			res = append(res, errors.NewParseError("body", "body", "", err))
+		} else {
+			// validate body object
+			if err := body.Validate(route.Formats); err != nil {
+				res = append(res, err)
+			}
+
+			if len(res) == 0 {
+				o.Body = &body
+			}
+		}
+	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
