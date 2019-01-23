@@ -14,7 +14,7 @@ import (
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations/user"
 )
 
-//go:generate swagger generate server --target ../../../usegoswagger --name Usegoswagger --spec ../../swagger.yml --model-package gen/models --server-package gen/restapi
+//go:generate swagger generate server --target ../../../usegoswagger --name Usegoswagger --spec ../../swagger.yml --model-package gen/models --server-package gen/restapi --exclude-main
 
 func configureFlags(api *operations.UsegoswaggerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
