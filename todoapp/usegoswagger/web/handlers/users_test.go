@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/mylib/mytime"
-	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/components"
+	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/components"
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/testutil"
 	webtest "github.com/podhmo/go-webtest"
 )

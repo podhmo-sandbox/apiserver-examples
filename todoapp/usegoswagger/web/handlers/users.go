@@ -4,7 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	operations "github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations/user"
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/viewmodel"
-	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/components"
+	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/components"
 )
 
 // UserHandler :

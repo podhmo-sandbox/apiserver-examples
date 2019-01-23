@@ -4,7 +4,7 @@ import (
 	"sync"
 
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations"
-	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/components"
+	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/components"
 )
 
 var (
