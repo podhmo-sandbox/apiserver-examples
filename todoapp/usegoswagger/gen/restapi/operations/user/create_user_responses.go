@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	models "github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/models"
+	viewmodel "github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/viewmodel"
 )
 
 // CreateUserCreatedCode is the HTTP code returned for type CreateUserCreated
@@ -25,7 +25,7 @@ type CreateUserCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.User `json:"body,omitempty"`
+	Payload *viewmodel.User `json:"body,omitempty"`
 }
 
 // NewCreateUserCreated creates CreateUserCreated with default headers values
@@ -35,13 +35,13 @@ func NewCreateUserCreated() *CreateUserCreated {
 }
 
 // WithPayload adds the payload to the create user created response
-func (o *CreateUserCreated) WithPayload(payload *models.User) *CreateUserCreated {
+func (o *CreateUserCreated) WithPayload(payload *viewmodel.User) *CreateUserCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the create user created response
-func (o *CreateUserCreated) SetPayload(payload *models.User) {
+func (o *CreateUserCreated) SetPayload(payload *viewmodel.User) {
 	o.Payload = payload
 }
 
