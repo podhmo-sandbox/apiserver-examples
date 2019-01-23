@@ -17,7 +17,7 @@ type RequestOption struct {
 	Method     string
 	Path       string
 	Body       io.Reader
-	Assertions []func(t *testing.T, res *TryRequestResponse)
+	Assertions []func(t testing.TB, res *TryRequestResponse)
 	Response   TryRequestResponse
 }
 
@@ -28,7 +28,7 @@ type TryRequestResponse struct {
 }
 
 // TryRequest :
-func TryRequest(t *testing.T, mux http.Handler, method, path string, status int, options ...func(*RequestOption) error) *TryRequestResponse {
+func TryRequest(t testing.TB, mux http.Handler, method, path string, status int, options ...func(*RequestOption) error) *TryRequestResponse {
 	t.Helper()
 	rop := &RequestOption{
 		Method: method,
@@ -81,7 +81,7 @@ func WithRequestJSONBody(body string) func(rop *RequestOption) error {
 }
 
 // WithRequestAssert :
-func WithRequestAssert(assert func(t *testing.T, res *TryRequestResponse)) func(rop *RequestOption) error {
+func WithRequestAssert(assert func(t testing.TB, res *TryRequestResponse)) func(rop *RequestOption) error {
 	return func(rop *RequestOption) error {
 		rop.Assertions = append(rop.Assertions, assert)
 		return nil
@@ -104,14 +104,14 @@ func WithRequestAssertJSONResponse(body string) func(rop *RequestOption) error {
 			expected = string(b)
 		}
 
-		rop.Assertions = append(rop.Assertions, func(t *testing.T, res *TryRequestResponse) {
+		rop.Assertions = append(rop.Assertions, func(t testing.TB, res *TryRequestResponse) {
 			var actual string
 			var ob interface{}
 
 			{
 				decoder := json.NewDecoder(&res.Body)
 				if err := decoder.Decode(&ob); err != nil {
-					t.Fatalf("unexpected response: %q", res.Body.String())
+					t.Fatalf("unexpected response:\n%q", res.Body.String())
 				}
 			}
 
