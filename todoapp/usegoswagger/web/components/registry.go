@@ -8,7 +8,7 @@ import (
 
 // Registry : components registry
 type Registry struct {
-	Now mytime.NowProvider
+	Now func() mytime.Time
 	sync.Mutex
 }
 
@@ -17,6 +17,6 @@ func WithNow(now mytime.Time) func(*Registry) {
 	return func(r *Registry) {
 		defer r.Unlock()
 		r.Lock()
-		r.Now = mytime.NewNowProvider(mytime.WithRawTime(now.Time))
+		r.Now = mytime.NewNowProvider(mytime.WithRawTime(now.Time)).Now
 	}
 }

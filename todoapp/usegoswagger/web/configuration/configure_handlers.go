@@ -8,5 +8,9 @@ import (
 
 // ConfigureHandlers :
 func ConfigureHandlers(c *Configurator, api *operations.UsegoswaggerAPI) {
-	api.UserCreateUserHandler = user.CreateUserHandlerFunc(handlers.CreateUser)
+	registry := c.Registry
+	{
+		h := &handlers.UserHandler{Registry: registry}
+		api.UserCreateUserHandler = user.CreateUserHandlerFunc(h.CreateUser)
+	}
 }

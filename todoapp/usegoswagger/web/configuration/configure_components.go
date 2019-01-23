@@ -10,6 +10,6 @@ func ConfigureComponents(c *Configurator, api *operations.UsegoswaggerAPI) {
 	defer c.Registry.Unlock()
 	c.Registry.Lock()
 	if c.Registry.Now == nil {
-		c.Registry.Now = mytime.NewNowProvider()
+		c.Registry.Now = mytime.NewNowProvider().Now
 	}
 }

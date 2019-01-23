@@ -1,23 +1,23 @@
 package handlers
 
 import (
-	"time"
-
 	"github.com/go-openapi/runtime/middleware"
 	operations "github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/restapi/operations/user"
 	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/gen/viewmodel"
+	"github.com/podhmo-sandbox/apiserver-examples/todoapp/usegoswagger/web/components"
 )
 
-// UserController :
-type UserController struct {
+// UserHandler :
+type UserHandler struct {
+	*components.Registry
 }
 
 // CreateUser :
-func CreateUser(params operations.CreateUserParams) middleware.Responder {
+func (h *UserHandler) CreateUser(params operations.CreateUserParams) middleware.Responder {
 	// todo: validation
 	return operations.NewCreateUserCreated().WithPayload(&viewmodel.User{
 		ID:        "1", // xxx
 		Name:      params.Body.Name,
-		CreatedAt: viewmodel.Datetime(time.Now().Format(time.RFC3339)), // xxx
+		CreatedAt: viewmodel.Datetime(h.Now().String()),
 	})
 }
