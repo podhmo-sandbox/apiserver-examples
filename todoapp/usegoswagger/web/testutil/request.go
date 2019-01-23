@@ -9,6 +9,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/Cside/jsondiff"
 	"github.com/pkg/errors"
 )
 
@@ -118,17 +119,14 @@ func WithRequestAssertJSONResponse(body string) func(treq *TryRequestRequest) er
 				if err := decoder.Decode(&ob); err != nil {
 					t.Fatalf("unexpected response:\n%q", res.Body.String())
 				}
-			}
-
-			{
 				b, err := json.MarshalIndent(&ob, "", "  ")
 				if err != nil {
 					panic(err) // something wrong
 				}
 				actual = string(b)
 			}
-
-			if expected != actual {
+			diff := jsondiff.LineDiff(actual, expected)
+			if diff != "" {
 				t.Fatalf(`mismatch response:
 ## diff (- missing, + excess)
 
@@ -146,7 +144,7 @@ func WithRequestAssertJSONResponse(body string) func(treq *TryRequestRequest) er
 
 ## actual response
 %s`,
-					StringDiff(expected, actual),
+					diff,
 					res.Request.Method,
 					res.Request.Path,
 					res.Request.bodyString,
