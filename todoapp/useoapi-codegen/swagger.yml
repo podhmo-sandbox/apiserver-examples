@@ -1,0 +1,41 @@
+info:
+  title: Usegoswagger
+  version: 0.1.0
+schemes:
+- http
+openapi: 3.0.0
+components:
+  schemas:
+    datetime:
+      type: string
+      example: '2018-01-01T00:00:Z'
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/datetime'
+      required:
+      - name
+paths:
+  /users:
+    post:
+      operationId: createUser
+      tags:
+      - user
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
