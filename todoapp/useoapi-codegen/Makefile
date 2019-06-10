@@ -8,12 +8,12 @@ TOOLSDIR := _tools
 codegen:
 	# types only
 	# oapi-codegen -generate types openapi3.yml
-	mkdir -p api
-	oapi-codegen -generate server,types,spec openapi3.yml > api/server.go
+	mkdir -p Openapi3
+	oapi-codegen -generate server,types,spec openapi3.yml > Openapi3/server.go
 
-sync: GO111MOUDLE = on
-sync:
-	go mod download github.com/labstack/echo/v4
+run:
+	GO111MODULE=on go run cmd/useoapi-server/main.go
+
 ## validate
 # https://github.com/wework/speccy
 node_modules:
