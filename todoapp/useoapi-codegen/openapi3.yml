@@ -1,8 +1,18 @@
 info:
-  title: Usegoswagger
+  title: Use oapi codegen
   version: 0.1.0
-schemes:
-- http
+  contact:
+    name: me
+    email: me@example.net
+    url: http://example.net
+tags:
+  - name: user
+# schemes:
+# - http
+servers:
+- description: ''
+  url: 'http://localhost:8080/api'
+
 openapi: 3.0.0
 components:
   schemas:
@@ -24,6 +34,7 @@ paths:
   /users:
     post:
       operationId: createUser
+      description: create user data
       tags:
       - user
       responses:
