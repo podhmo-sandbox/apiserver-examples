@@ -2,11 +2,27 @@ OPTS ?= "--log=DEBUG"
 # EXTRA_OPTS := --sort-keys
 TOOLSDIR := _tools
 
-openapi3.yml: ../usegoswagger/swagger.yml
-	python ${TOOLSDIR}/2to3.py ${OPTS} ${EXTRA_OPTS} --src $< --savedir .
+## codegen
+# https://github.com/deepmap/oapi-codegen
+# go get -v github.com/deepmap/oapi-codegen/cmd/oapi-codegen
+codegen:
+	# types only
+	# oapi-codegen -generate types openapi3.yml
+	mkdir -p api
+	oapi-codegen -generate server,types,spec openapi3.yml > api/server.go
 
+sync: GO111MOUDLE = on
+sync:
+	go mod download github.com/labstack/echo/v4
+## validate
+# https://github.com/wework/speccy
 node_modules:
 	npm install
 validate:
 	./node_modules/.bin/speccy lint openapi3.yml
 .PHONY: validate
+
+## migrate
+openapi3.yml: ../usegoswagger/swagger.yml
+	python ${TOOLSDIR}/2to3.py ${OPTS} ${EXTRA_OPTS} --src $< --savedir .
+
